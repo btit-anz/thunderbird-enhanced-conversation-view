@@ -1,0 +1,31 @@
+name: Verify and build
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Test overrides and build XPI
+        run: npm run verify
+      - uses: actions/upload-artifact@v4
+        with:
+          name: BTIT-Conversations
+          path: artifacts/*.xpi
+          if-no-files-found: error
+          retention-days: 14

@@ -1,0 +1,7 @@
+/.build/
+/artifacts/
+/node_modules/
+*.secret
+*.pem
+.env
+.DS_Store

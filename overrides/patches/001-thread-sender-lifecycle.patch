@@ -1,0 +1,40 @@
+diff --git a/addon/experiment-api/apis/msgWindowApi.js b/addon/experiment-api/apis/msgWindowApi.js
+index 3b2808a..0a8b382 100644
+--- a/addon/experiment-api/apis/msgWindowApi.js
++++ b/addon/experiment-api/apis/msgWindowApi.js
+@@ -151,13 +151,34 @@ var convMsgWindow = class extends ExtensionCommon.ExtensionAPI {
+             // TODO: How to wait for tab loaded?
+             // Probably need to wait for the nativeTab to finish loading?
+             // Or maybe a browser underneath it?
+-            waitForWindow(contentWin).then(() => {
++            let removeThreadSenders;
++            let removed = false;
++            waitForWindow(contentWin).then(async () => {
++              if (removed) {
++                return;
++              }
+               contentWin.document
+                 .getElementById("multiMessageBrowser")
+                 ?.setAttribute("context", "browserContext");
+               summarizeThreadHandler(contentWin, tabId, context);
++              try {
++                const { installThreadSenders } = ChromeUtils.importESModule(
++                  "chrome://conversations/content/experiment-api/modules/ThreadSenders.sys.mjs"
++                );
++                removeThreadSenders = await installThreadSenders(contentWin);
++                if (removed) {
++                  removeThreadSenders();
++                }
++              } catch (error) {
++                console.error(
++                  "Conversations: installing thread senders",
++                  error
++                );
++              }
+             });
+             return function () {
++              removed = true;
++              removeThreadSenders?.();
+               let threadPane = contentWin.threadPane;
+               threadPane._onSelect = threadPane._oldOnSelect;
+               contentWin.document

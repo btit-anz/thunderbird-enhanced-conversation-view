@@ -1,0 +1,12 @@
+{
+  "upstreamRepository": "https://github.com/thunderbird-conversations/thunderbird-conversations.git",
+  "upstreamCommit": "cf37c618f31b1796ca43ea04b15f1019dd3f080d",
+  "upstreamVersion": "4.3.18",
+  "version": "4.3.18.1",
+  "testedThunderbirdVersion": "159.0",
+  "patches": ["patches/001-thread-sender-lifecycle.patch"],
+  "files": [
+    "addon/experiment-api/modules/ThreadSenders.sys.mjs",
+    "addon/tests/threadSenders.test.mjs"
+  ]
+}
