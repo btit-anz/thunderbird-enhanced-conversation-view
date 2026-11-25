@@ -1,0 +1,18 @@
+{
+  "name": "btit-thunderbird-enhanced-conversation-view",
+  "version": "4.3.18.1",
+  "private": true,
+  "description": "BTIT sender summaries for Thunderbird Conversations",
+  "license": "MPL-2.0",
+  "engines": { "node": ">=24" },
+  "scripts": {
+    "prepare:source": "node scripts/manage.mjs prepare",
+    "test": "node scripts/manage.mjs test",
+    "build": "node scripts/manage.mjs build",
+    "verify": "node scripts/manage.mjs verify"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/btit-anz/thunderbird-enhanced-conversation-view.git"
+  }
+}
